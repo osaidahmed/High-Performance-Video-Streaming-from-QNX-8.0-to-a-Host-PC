@@ -1,6 +1,6 @@
 # High-Performance Video Streaming from QNX 8.0 to a Host PC
 ---
-This guide is for developers using WSL as their primary environment to build and deploy applications for QNX 8.0. It provides a robust, low-latency solution for streaming video from a QNX device (e.g., Raspberry Pi 4) to the host PC for real-time processing.
+This guide is for developers using WSL as their primary environment to build and deploy applications for QNX 8.0. It provides a solution for streaming video from a QNX device to the host PC for real-time processing.
 
 ---
 
