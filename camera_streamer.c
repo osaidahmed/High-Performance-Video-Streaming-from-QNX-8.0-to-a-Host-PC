@@ -16,7 +16,7 @@
 #include <termios.h>
 #include <camera/camera_api.h>
 
-#define SERVER_IP "10.33.32.247"
+#define SERVER_IP "" 
 #define SERVER_PORT 12345
 
 /*
