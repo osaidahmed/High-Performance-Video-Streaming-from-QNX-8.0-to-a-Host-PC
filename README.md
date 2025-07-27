@@ -64,7 +64,7 @@ python qnx_stream_receiver.py
 ```
 It will begin listening for a connection.
 
-From your WSL terminal, transfer the compiled camera_streamer binary to your QNX device (e.g., via scp) and execute it.
+From your WSL terminal, transfer the compiled camera_streamer binary to your QNX device via scp and execute it.
 
 A new window managed by OpenCV should now appear on your Windows desktop, displaying the live video stream.
 
