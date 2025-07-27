@@ -52,7 +52,7 @@ Edit camera_streamer.c to change the `SERVER_IP` macro to the Windows IP address
 ---
 
 ### Connection & Data Protocol
-This solution uses a standard TCP socket stream for communication. The C client on QNX utilizes the native libsocket library to send a continuous stream of raw, uncompressed 640x480 BGR8888 pixel data. 
+This solution uses a standard TCP socket stream for communication. The C client on QNX utilizes the native libsocket library to send a continuous stream of BGR8888 pixel data. 
 
 The Python server on Windows then uses the standard socket library to receive this data for processing with OpenCV
 
