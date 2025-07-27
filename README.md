@@ -69,5 +69,5 @@ A new window managed by OpenCV should now appear on your Windows desktop, displa
 
 ### Why the Server Must Run on Windows
 
-The Python server script must be run from the native Windows filesystem (e.g., C:\) to ensure network reliability. Running it from within the WSL filesystem fails because WSL2's isolated virtual network makes it inaccessible to other devices on the LAN. Workarounds like netsh port forwarding are notoriously unreliable and can lead to silent connection failures. Bypassing the WSL networking stack entirely by running the server natively on Windows is the solution used in this project.
+The Python server script must be run from the native Windows filesystem to ensure network reliability. Running it from within the WSL filesystem fails because WSL2's isolated virtual network makes it inaccessible to other devices on the LAN. Workarounds like netsh port forwarding are were unreliable and can lead to silent connection failures. Bypassing the WSL networking stack entirely by running the server natively on Windows is the solution used in this project.
 
