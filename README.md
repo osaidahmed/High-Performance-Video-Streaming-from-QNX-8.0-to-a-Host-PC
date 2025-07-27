@@ -42,7 +42,6 @@ Run the following command:
 New-NetFirewallRule -DisplayName "Allow QNX Camera Stream" -Direction Inbound -Protocol TCP -LocalPort 12345 -Action Allow
 ```
 
----
 
 ### Find your Windows Host IP Address
 
@@ -52,7 +51,6 @@ The QNX device needs to connect to your Windows host, not WSL. Run ipconfig in C
 
 Edit camera_streamer.c to change the `SERVER_IP` macro to the Windows IP address you just found.
 
----
 
 ### Connection & Data Protocol
 This solution uses a standard TCP socket stream for communication. The C client on QNX utilizes the native libsocket library to send a continuous stream of BGR8888 pixel data. 
