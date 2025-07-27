@@ -57,15 +57,13 @@ This solution uses a standard TCP socket stream for communication. The C client 
 The Python server on Windows then uses the standard socket library to receive this data for processing with OpenCV
 
 ### Run the System
-
-Start the Python Server: Move the Python script to the native Windows filesystem and run the qnx_stream_receiver.py script. 
-
+Move the Python script to the native Windows filesystem and run the qnx_stream_receiver.py script. 
 ```powershell
 python qnx_stream_receiver.py
 ```
 It will begin listening for a connection.
 
-Run the QNX Client: From your WSL terminal, transfer the compiled camera_streamer binary to your QNX device (e.g., via scp) and execute it.
+From your WSL terminal, transfer the compiled camera_streamer binary to your QNX device (e.g., via scp) and execute it.
 
 A new window managed by OpenCV should now appear on your Windows desktop, displaying the live video stream.
 
