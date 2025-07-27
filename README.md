@@ -2,12 +2,6 @@
 ---
 This guide is for developers using WSL as their primary environment to build and deploy applications for QNX 8.0. It provides a robust, low-latency solution for streaming video from a QNX device (e.g., Raspberry Pi 4) to the host PC for real-time processing.
 
-## A Note on WSL Networking
-
-Running a network server inside WSL that needs to accept connections from external LAN devices is unreliable.
-
-Testing shows that standard methods like `netsh` port forwarding can lead to silent connection failures where packets are dropped. Therefore, the only proven method for this project is to run the Python server directly on the Windows host. Your WSL terminal is still used for compiling, file transfers, and SSH.
-
 ---
 
 ## Prerequisites
