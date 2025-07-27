@@ -1,4 +1,4 @@
-# High-Performance Video Streaming from QNX 8.0 to a Host PC
+# Video Streaming from QNX 8.0 to a Host PC Using WSL
 ---
 This guide is for developers using WSL as their primary environment to build and deploy applications for QNX 8.0. It provides a solution for streaming video from a QNX device to the host PC for real-time processing.
 
@@ -51,22 +51,25 @@ Edit camera_streamer.c to change the `SERVER_IP` macro to the Windows IP address
 
 ---
 
+### Connection & Data Protocol
+This solution uses a standard TCP socket stream for communication. The C client on QNX utilizes the native libsocket library to send a continuous stream of raw, uncompressed 640x480 BGR8888 pixel data. 
+
+The Python server on Windows then uses the standard socket library to receive this data for processing with OpenCV
+
 ### Run the System
 
-This step requires running the Python server from your native Windows filesystem to ensure network reliability.
+Start the Python Server: Move the Python script to the native Windows filesystem and run the qnx_stream_receiver.py script. 
 
-1. Move the Server Script to Windows
-The Python script must be run from outside the WSL filesystem and run:
 ```powershell
 python qnx_stream_receiver.py
 ```
-The server is now listening.
+It will begin listening for a connection.
 
-#### Run the Client (from QNX)
-
-From your WSL terminal, use `scp` to transfer the compiled `camera_streamer` binary to your QNX device.
-
-SSH into your QNX device from WSL and execute the binary.
+Run the QNX Client: From your WSL terminal, transfer the compiled camera_streamer binary to your QNX device (e.g., via scp) and execute it.
 
 A new window managed by OpenCV should now appear on your Windows desktop, displaying the live video stream.
+
+### Why the Server Must Run on Windows
+
+The Python server script must be run from the native Windows filesystem (e.g., C:\) to ensure network reliability. Running it from within the WSL filesystem fails because WSL2's isolated virtual network makes it inaccessible to other devices on the LAN. Workarounds like netsh port forwarding are notoriously unreliable and can lead to silent connection failures. Bypassing the WSL networking stack entirely by running the server natively on Windows is the solution used in this project.
 
