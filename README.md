@@ -49,12 +49,7 @@ New-NetFirewallRule -DisplayName "Allow QNX Camera Stream" -Direction Inbound -P
 
 ### Find your Windows Host IP Address
 
-The QNX device needs to connect to your Windows host, not WSL. Find it by running this command:
-
-```bash
-ipconfig
-```
-and taking ntoe of the IPv4 address
+The QNX device needs to connect to your Windows host, not WSL. Run ipconfig in Command Prompt or PowerShell to find your computer's IP address.
 
 ### Set the Server IP
 
