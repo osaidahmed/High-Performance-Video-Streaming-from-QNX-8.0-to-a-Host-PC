@@ -1,55 +1,85 @@
-# camera_example1_callback
+# High-Performance Video Streaming from QNX 8.0 to a Host PC
 
-This example source code shows how you can interact with the sensor service using libcamapi. Sensor service interfaces with camera drivers to send user applications camera frames through libcamapi.
+This guide is for developers using WSL as their primary environment to build and deploy applications for QNX 8.0. It provides a robust, low-latency solution for streaming video from a QNX device (e.g., Raspberry Pi 4) to the host PC for real-time processing.
+---
 
-camera_example1_callback shows an example of how to use the callbackmode; every time there is a new buffer available, `processCameraData` gets called.
+## A Note on WSL Networking
 
-### How to build
+Running a network server inside WSL that needs to accept connections from external LAN devices is unreliable.
 
-QNX SDP 8.0 is required. SDP and required packages can be installed with QNX Software Center.
+Testing shows that standard methods like `netsh` port forwarding can lead to silent connection failures where packets are dropped. Therefore, the only proven method for this project is to run the Python server directly on the Windows host. Your WSL terminal is still used for compiling, file transfers, and SSH.
 
-Required packages:
+---
 
-- com.qnx.qnx800.target.sf.camapi
-- com.qnx.qnx800.target.sf.base
-- com.qnx.qnx800.target.mm.aoi
+## Prerequisites
+
+### Host PC Environment
+
+- Windows 10 or 11 with WSL2 installed.
+- Python 3 installed on Windows (for running the server).
+- Required Python packages for the Windows installation are numpy and opencv
+  
+### QNX System Requirements
+
+QNX SDP 8.0 is required.
+
+Install the following packages from the QNX Software Center:
+
+- com.qnx.qnx800.target.sf.camapi  
+- com.qnx.qnx800.target.sf.base  
+- com.qnx.qnx800.target.mm.aoi  
 - com.qnx.qnx800.target.mm.mmf.core
 
-Run the following commands to build the application:
+---
+
+## Core Setup & Configuration
+
+### Configure the Windows Firewall
+
+You must create a firewall rule on your Windows host to accept the incoming connection from the QNX device.
+
+Open PowerShell as an Administrator.
+
+Run the following command:
+
+```powershell
+New-NetFirewallRule -DisplayName "Allow QNX Camera Stream" -Direction Inbound -Protocol TCP -LocalPort 12345 -Action Allow
+```
+
+---
+
+### Find your Windows Host IP Address
+
+The QNX device needs to connect to your Windows host, not WSL. 
+
 ```bash
-# Source your QNX SDP script
-source ~/qnx800/qnxsdp-env.sh
-
-# Clone the repository
-git clone https://gitlab.com/qnx/sample-apps/camera_example1_callback.git && cd camera_example1_callback
-
-# Build and install
-make install
+ipconfig
 ```
 
-### How to run
+### Set the Server IP
 
-```bash
-# scp libraries and tests to the target (note, mDNS is configured from
-# /boot/qnx_config.txt and uses qnxpi.local by default).
-TARGET_HOST=<target-ip-address-or-hostname>
+In your WSL terminal, edit camera_streamer.c
 
-# scp the built binary over to your QNX target
-scp ./nto/aarch64/o.le/camera_example1_callback qnxuser@$TARGET_HOST:/data/home/qnxuser/bin
+Change the `SERVER_IP` macro to the Windows IP address you just found.
 
-# ssh into the target
-ssh qnxuser@$TARGET_HOST
+---
 
-# Make sure sensor service is running
-# Run "pidin ar | grep sensor" to see if sensor is running, if not run this as root:
-# su
-# sensor -U 521:521,1001 -b external -r /data/share/sensor -c /system/etc/system/config/camera_module3.conf
+### Run the System
 
-# Run example; -u 1 means we want to use CAMERA_UNIT_1 which is specified in sensor_demo.conf
-camera_example1_callback -u 1
+This step requires running the Python server from your native Windows filesystem to ensure network reliability.
+
+1. Move the Server Script to Windows
+The Python script must be run from outside the WSL filesystem and run:
+```powershell
+python qnx_stream_receiver.py
 ```
+The server is now listening.
 
-You will see the following output:
-```console
-Channel averages: 84.772, 130.876, 129.243 took 3.472 ms (press any key to stop example)
-```
+#### Run the Client (from QNX)
+
+From your WSL terminal, use `scp` to transfer the compiled `camera_streamer` binary to your QNX device.
+
+SSH into your QNX device from WSL and execute the binary.
+
+A new window managed by OpenCV should now appear on your Windows desktop, displaying the live video stream.
+
