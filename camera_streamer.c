@@ -18,6 +18,15 @@
 
 #define SERVER_IP "10.33.32.247"
 #define SERVER_PORT 12345
+
+/*
+                	DOWNSCALE_FACTOR	    Resolution (W x H)
+    High Quality	    8	                    288 x 162
+    Balanced	        12	                    192 x 108
+    High Speed	        18	                    128 x 72
+    Extreme Speed	    24	                    96 x 54
+*/
+
 #define DOWNSCALE_WIDTH 192
 #define DOWNSCALE_HEIGHT 108
 #define DOWNSCALE_FACTOR 12
