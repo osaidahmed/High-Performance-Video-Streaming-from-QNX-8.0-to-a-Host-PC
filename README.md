@@ -1,6 +1,6 @@
 # Video Streaming from QNX 8.0 to a Host PC Using WSL
 ---
-This guide is for developers using WSL as their primary environment to build and deploy applications for QNX 8.0. It provides a solution for streaming video from a QNX device to the host PC for real-time processing.
+This guide provides a solution for streaming video from a Pi Camera on a QNX-powered Raspberry Pi to a host PC, tailored for developers using WSL as their primary environment for the QNX 8.0.
 
 ---
 
@@ -22,11 +22,11 @@ Install the following packages from the QNX Software Center:
 - com.qnx.qnx800.target.sf.base  
 - com.qnx.qnx800.target.mm.aoi  
 - com.qnx.qnx800.target.mm.mmf.core
-- 
+  
 ## Core Setup & Configuration
 
 ### Important Note
-The provided client configuration is specifically for the official Raspberry Pi Camera Module. Using different camera hardware will require modifications to the C client (camera_streamer.c) to handle other resolutions or pixel formats. To enable the correct driver for the Pi Camera, you must first edit the system's startup script.
+The provided client configuration is specifically for the official Raspberry Pi Camera Module. Using different camera hardware will require modifications to the C client (camera_streamer.c) to handle other resolutions or pixel formats. Additionally, to enable the correct driver for the Pi Camera, you must first edit the system's startup script.
 
 On the QNX device, log in as the root user (using su with the password root) and edit the startup file at /system/etc/post_startup.sh. In the camera section of this file, find the line for the "Camera Module 3" (line 91) and remove its comment (#). Then, add a comment to disable the simulated camera (line 103). After saving the file, reboot the device using the shutdown command. The physical camera will then be active and available to applications.
 
