@@ -29,7 +29,7 @@
 
 #define DOWNSCALE_WIDTH 192
 #define DOWNSCALE_HEIGHT 108
-#define DOWNSCALE_FACTOR 12
+#define DOWNSCALE_FACTOR 12 
 
 static int g_sock = -1;
 static uint8_t* g_small_frame_buffer = NULL; // Now uint8_t for byte access
