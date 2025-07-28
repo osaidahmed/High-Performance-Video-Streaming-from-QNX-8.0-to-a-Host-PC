@@ -72,3 +72,8 @@ A new window managed by OpenCV should now appear on your Windows desktop, displa
 
 The Python server script must be run from the native Windows filesystem to ensure network reliability. Running it from within the WSL filesystem fails because WSL2's isolated virtual network makes it inaccessible to other devices on the LAN. Workarounds like netsh port forwarding are were unreliable and can lead to silent connection failures. Bypassing the WSL networking stack entirely by running the server natively on Windows is the solution used in this project.
 
+### A Note on WSL Build Failures
+A conflict with the NAME environment variable, which can be inherited from the Windows host, may cause the make command to fail. If you encounter build errors, run the following command in your WSL terminal before make:
+```Bash
+unset NAME
+```
