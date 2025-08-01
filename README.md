@@ -1,6 +1,6 @@
 # Video Streaming from QNX 8.0 to a Host PC Using WSL
 ---
-This guide provides a solution for streaming video from a Pi Camera on a QNX-powered Raspberry Pi to a host PC, tailored for developers using WSL as their primary environment for the QNX 8.0.
+This guide provides a solution for streaming video from a Pi Camera on a QNX-powered Raspberry Pi to a host PC, intended for developers using WSL as their primary environment for the QNX 8.0.
 
 ---
 
@@ -77,3 +77,4 @@ A conflict with the NAME environment variable, which can be inherited from the W
 ```Bash
 unset NAME
 ```
+
